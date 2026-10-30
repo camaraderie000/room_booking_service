@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.room_booking.api.dto.LoginRequest;
 import com.example.room_booking.api.dto.RegisterRequest;
+import com.example.room_booking.api.dto.TokenResponse;
 import com.example.room_booking.api.dto.UserResponse;
 import com.example.room_booking.domain.User;
 import com.example.room_booking.service.AuthService;
@@ -28,5 +30,10 @@ public class AuthController {
     public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
         User user = authService.register(request.email(), request.password());
         return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.from(user));
+    }
+
+    @PostMapping("/login")
+    public TokenResponse login(@Valid @RequestBody LoginRequest request) {
+        return new TokenResponse(authService.login(request.email(), request.password()));
     }
 }
