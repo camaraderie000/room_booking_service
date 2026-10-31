@@ -39,4 +39,15 @@ public class UserRepository {
                 rs.getString("role")))
             .optional();
     }
+
+    public Optional<User> findById(UUID id) {
+    return jdbc.sql("SELECT id, email, password_hash, role FROM users WHERE id = :id")
+        .param("id", id)
+        .query((rs, rowNum) -> new User(
+            rs.getObject("id", UUID.class),
+            rs.getString("email"),
+            rs.getString("password_hash"),
+            rs.getString("role")))
+        .optional();
+    }
 }
