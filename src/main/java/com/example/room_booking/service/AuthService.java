@@ -51,4 +51,6 @@ public class AuthService {
                         "INVALID_CREDENTIALS", "Неверный email или пароль"));
         return jwtService.generateToken(user);
     }
+
+    
 }
